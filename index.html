@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+   <head>
+
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+      <meta name="description" content="">
+      <meta name="author" content="">
+
+      <!--Jqeury-->
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+      <!--Jquery-UI-->
+<!--      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+      <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+      <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css">
+
+      <!--DataTable-->
+      <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+      <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
+
+<!--
+      <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+      <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" />
+-->
+
+
+      <!--Common-->
+      <link rel="stylesheet" type="text/css" href="/css/hoonguy-main.css" />
+      <!--Font Awesome-->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
+      <!--moment-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+      <!--numeral-->
+      <script src="/js/numeral.min.js"></script>
+      <!--underscore for autocomplete-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+
+   </head>
+
+   <body>
+
+<!-- Top navigation Start -->
+      <nav class="navbar bg-dark">
+         <span class="navbar-icon fas fa-bars fa-lg" style="color:#DDDDDD;" onclick="openNav()"></span>
+         <span class="navbar-menuTitle" id="navbar-title"></span>
+         <span class="navbar-custName" id="navbar-userName"></span>
+         <span class="navbar-logOut" onclick="logOut()" id="navbar-logOut">로그아웃</span>
+      </nav>
+<!-- Top navigation End -->
+
+<!-- Slide menu Start -->
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#"><i class="fas fa-table"></i>기간별 매입 현황</a>
+        <a href="#"><i class="fas fa-table"></i>재고 현황-코일</a>
+        <a href="#"><i class="fas fa-table"></i>재고 현황-제품</a>
+        <a href="#"><i class="fas fa-table"></i>생산 현황</a>
+        <a href="#"><i class="fas fa-table"></i>출고 현황</a>
+        <a href="#"><i class="fas fa-table"></i>매출 현황</a>
+        <a href="#"><i class="fas fa-table"></i>매출처 현황</a>
+        <a href="#"><i class="fas fa-table"></i>매출/수금 현황</a>
+     </div>
+<!-- Slide menu End -->
+      <div class="card">
+<!-- Condition Form Start -->
+         <div class="form-style-main">
+            <ul>
+               <li>
+                  <label class="form-style-label">매입기간</label>
+                     <input id="stkSd" type="text" class="field-style field-2-2" />
+                  <label class="form-style-label-x">&nbsp&nbsp&nbsp~&nbsp&nbsp&nbsp</label>
+                     <input id="stkEd" type="text" class="field-style field-2-2" />
+                  <label>&nbsp&nbsp&nbsp&nbsp</label>
+                  <label class="form-style-label">매입처</label>
+                     <input id="buyCustCd" type="text" class="field-style field-5" />
+                     <input id="buyCustCd-hidden" type="hidden">
+                  <label>&nbsp&nbsp</label>
+                  <label class="form-style-label">매입유형</label>
+                     <select id="inType">
+                        <option value='' selected="selected">전체</option>
+                        <option value='C'>매입</option>
+                        <option value='D'>B/L</option>
+                        <option value='E'>매입반품</option>
+                        <option value='O'>매입할인</option>
+                        <option value='Z'>금액조정</option>
+                     </select>
+                  <label>&nbsp&nbsp&nbsp</label>
+                  <label class="form-style-label">&nbsp&nbsp소재번호</label>
+                     <input id="coilNo" type="text" class="field-style field-4-3" />
+               </li>
+               <li>
+                  <label class="form-style-label">품명&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                     <input id="nameCd" type="text" class="field-style field-1" />
+                     <input id="nameCd-hidden" type="hidden">
+                  <label>&nbsp&nbsp</label>
+                  <label class="form-style-label">재질</label>
+                     <input id="stanCd" type="text" class="field-style field-3-1" />
+                     <input id="stanCd-hidden" type="hidden">
+                  <label>&nbsp&nbsp&nbsp&nbsp</label>
+                  <label class="form-style-label">두께&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                     <input id="size1Start" type="text" class="field-style field-2-1" />
+                  <label class="form-style-label-x">&nbsp&nbsp~&nbsp&nbsp</label>
+                     <input id="size1End" type="text" class="field-style field-2-1" />
+                  <label>&nbsp&nbsp&nbsp</label>
+                  <label class="form-style-label">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp폭</label>
+                     <input id="size2Start" type="text" class="field-style field-1-1" />
+                  <label class="form-style-label-x">&nbsp~&nbsp</label>
+                     <input id="size2End" type="text" class="field-style field-1-1" />
+                  <label class="form-style-label-x">&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                     <input id="add" class="btn btn-dark" type="button" value="조  회" />
+                  <label class="form-style-label-x">&nbsp&nbsp</label>
+                     <input id="reset" class="btn btn-dark" type="button" value="초기화" />
+                  <label class="form-style-label-x">&nbsp&nbsp</label>
+                     <input id="csv" class="btn btn-dark" type="button" value="저  장" />
+               </li>
+            </ul>
+         </div>
+         <div id="stkDate"></div>
+   <!-- Condition Form End -->
+
+<!-- DataTable Start -->
+<!--      <table id="example" class="table table-bordered table-hover table-sm" cellspacing="0" width="100%">-->
+         <table id="example" class="dataTable display nowrap cell-border" cellspacing="0" width="1220px">
+            <thead id="exampleHeader">
+               <tr>
+                  <th>매입일</th>
+                  <th>매입처</th>
+                  <th>품명</th>
+                  <th>재질</th>
+                  <th>Size</th>
+                  <th>수량</th>
+                  <th>중량</th>
+                  <th>단가</th>
+                  <th>금액</th>
+                  <th>소재번호</th>
+                  <th>매입유형</th>
+                  <th>MAKER</th>
+               </tr>
+            </thead>
+         </table>
+<!-- DataTable End -->
+      </div>
+      <div class="loader" id="loading"></div>
+
+      <script type="text/javascript" src="/control/main/f_crm001.js"></script>
+   </body>
+
+</html>
